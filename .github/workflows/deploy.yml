@@ -33,7 +33,7 @@ jobs:
           DEST_DIR: code-deploy-artifacts
 
       - name: Create deployment in CodeDeploy
-        uses: aws-actions/aws-codedeploy-deploy@v0.0.10
+        uses: aws-actions/aws-codedeploy-deploy@v1
         with:
           application-name: codedeploy-web3tier-BE             # CodeDeploy 애플리케이션 이름
           deployment-group: DG-codedeploy-web3tier-BE      # 배포 그룹 이름
