@@ -33,13 +33,12 @@ jobs:
           DEST_DIR: code-deploy-artifacts
 
       - name: Create deployment in CodeDeploy
-        uses: aws-actions/aws-codedeploy-deploy@v1
-        with:
-          application-name: codedeploy-web3tier-BE             # CodeDeploy 애플리케이션 이름
-          deployment-group: DG-codedeploy-web3tier-BE      # 배포 그룹 이름
-          deployment-bucket: ${{ secrets.S3_BUCKET_NAME }}
-          bundle-type: zip
-          bundle-key: code-deploy-artifacts/deployment.zip
+        run: |
+          aws deploy create-deployment \
+            --application-name codedeploy-web3tier-BE \
+            --deployment-config-name CodeDeployDefault.AllAtOnce \
+            --deployment-group-name DG-codedeploy-web3tier-BE \
+            --s3-location bucket=${{ secrets.S3_BUCKET_NAME }},bundleType=zip,key=nginx/$GITHUB_SHA.zip
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
